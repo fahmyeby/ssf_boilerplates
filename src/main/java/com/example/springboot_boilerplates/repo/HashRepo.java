@@ -1,6 +1,7 @@
 package com.example.springboot_boilerplates.repo;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -11,18 +12,21 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class HashRepo {
+    @Autowired
+    @Qualifier("redisTemplate")
+    RedisTemplate<String, String> template;
     
-    // day 15 slide 36
+    // day 15 slide 36 (save to redis)
     public void create(String redisKey, String hashKey, String hashValue){
         template.opsForHash().put(redisKey, hashKey, hashValue);
     }
 
-    // slide 37
+    // slide 37 (get by id)
     public Object get(String redisKey, String hashKey, String hashValue){
         return template.opsForHash().get(redisKey, hashKey);
     }
 
-    //slide 38
+    //slide 38 (delete)
     public Long delete(String redisKey, String hashKey, String hashValue){
        return template.opsForHash().delete(redisKey, hashKey);
     }
@@ -32,7 +36,7 @@ public class HashRepo {
         return template.opsForHash().hasKey(redisKey, hashKey);
     }
 
-    // slide 40 - <Object, Object> = <hashKey, hashValue>
+    // slide 40 - <Object, Object> = <hashKey, hashValue> (get all)
     public Map<Object, Object> getEntries(String redisKey){
         return template.opsForHash().entries(redisKey);
     }
