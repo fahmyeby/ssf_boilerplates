@@ -16,54 +16,8 @@ public class HashRepo {
     @Autowired
     @Qualifier("redisTemplate")
     RedisTemplate<String, String> template;
-    
-    // day 15 slide 36 (save to redis)
-    public void create(String redisKey, String hashKey, String hashValue){
-        template.opsForHash().put(redisKey, hashKey, hashValue);
-    }
 
-    // slide 37 (get by id)
-    public Object get(String redisKey, String hashKey, String hashValue){
-        return template.opsForHash().get(redisKey, hashKey);
-    }
-
-    //slide 38 (delete)
-    public Long delete(String redisKey, String hashKey, String hashValue){
-       return template.opsForHash().delete(redisKey, hashKey);
-    }
-
-    //slide 39 - 
-    public Boolean keyExists(String redisKey, String hashKey){
-        return template.opsForHash().hasKey(redisKey, hashKey);
-    }
-
-    // slide 40 - <Object, Object> = <hashKey, hashValue> (get all)
-    public Map<Object, Object> getEntries(String redisKey){
-        return template.opsForHash().entries(redisKey);
-    }
-
-    // slide 40 - as per slide
-    public Set<Object> getKey(String redisKey){
-        return template.opsForHash().keys(redisKey);
-    }
-    public List<Object> getValues(String redisKey){
-        return template.opsForHash().values(redisKey);
-    }
-
-    // slide 41
-    public Long size(String redisKey){
-        return template.opsForHash().size(redisKey);
-    }
-
-    public void expire(String redisKey, Integer expireValue){
-        Duration expireDuration = Duration.ofSeconds(expireValue);
-        template.expire(redisKey, expireDuration);
-    }
-
-
-    ////////////////////////////////////////////////////
-
-    // Add or update a single key-v/* */alue pair in a hash
+    // Add or update a single key-value pair in a hash
     public void setMap(String folder, String key, String value) {
         template.opsForHash().put(folder, key, value);
     }
