@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class HashRepo {
     @Autowired
-    @Qualifier("hashTemplate")
+    @Qualifier("redisTemplate")
     private RedisTemplate<String, String> template;
 
     // Add or update a single key-v/* */alue pair in a hash

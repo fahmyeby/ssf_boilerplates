@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ListRepo {
     @Autowired
-    @Qualifier("listTemplate")
+    @Qualifier("redisTemplate")
     RedisTemplate<String, String> template;
 
     // slide 30, slide 34

@@ -23,8 +23,10 @@ public class RedisConfig {
     @Value("${spring.data.redis.password}")
     private String redisPassword;
 
-    @Bean
-    public JedisConnectionFactory jedisConnectionFactory() {
+    // slide 18
+
+    @Bean("redisTemplate")
+    public RedisTemplate<String, String> createRedisConnection() {
         RedisStandaloneConfiguration rsc = new RedisStandaloneConfiguration();
         rsc.setHostName(redisHost);
         rsc.setPort(redisPort);
@@ -38,13 +40,8 @@ public class RedisConfig {
         JedisConnectionFactory jcf = new JedisConnectionFactory(rsc, jcc);
         jcf.afterPropertiesSet();
 
-        return jcf;
-    }
-
-    @Bean("hashTemplate")
-    public RedisTemplate<String, String> redisObjectTemplate01() {
         RedisTemplate<String, String> template = new RedisTemplate<>();
-        template.setConnectionFactory(jedisConnectionFactory());
+        template.setConnectionFactory(jcf);
         template.setKeySerializer(new StringRedisSerializer());
         template.setValueSerializer(new StringRedisSerializer());
 
